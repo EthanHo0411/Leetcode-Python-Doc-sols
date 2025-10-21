@@ -1,0 +1,41 @@
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        
+        result = []
+        i = 0
+        #sort the lsit to recreate 2sum env
+        #each time a number becomes the target in the 2sum env
+        nums.sort()
+        while i <len(nums)-2:
+            #at each index , make sure its less than 0 , otheriwse it will never cancel into 0
+            if nums[i] >0:
+                i+=1
+                continue
+            #also skip if its the same as the previous one (duplicate triplet)
+            if i>0 and nums[i] == nums[i-1]:
+                i+=1
+                continue
+            
+            #narrow the problem down into a 2sum problem where target is -nums[i]
+            target = -nums[i]
+            j = i+1
+            k = len(nums)-1
+
+            while j<k:
+                total = nums[j] + nums[k]
+                if total > target: 
+                    k-=1
+                elif total < target:
+                    j+=1
+                else: 
+                    result.append([nums[i], nums[j], nums[k]])
+                    j+=1
+                    #skip any duplicating number, results in duplicating triplet
+                    while nums[j] == nums[j-1] and j<k:
+                        j+=1
+            i+=1
+        return result
+                
+
+            
+

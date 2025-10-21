@@ -1,0 +1,32 @@
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        # have three dictionary of sets, for each row, col and box 
+        # place the value into the sets for checking 
+        from collections import defaultdict
+
+        rows = defaultdict(set)
+        cols = defaultdict(set)
+        box = defaultdict(set)
+
+        for row in range(9):
+            for col in range(9):
+                item = board[row][col]
+                if item != ".":
+                    continue
+                #check if the item is unique in its row
+                if item in rows[row]:
+                    return False
+                rows[row].add(item)
+
+                #check if the item is unique in its col
+                if item in cols[col]:
+                    return False
+                cols[col].add(item)
+
+                #check if the item is unique to its box
+                boxNumber = (row//3)*3 + col//3
+
+                if item in box[boxNumber]:
+                    return False
+                box[boxNumber].add(item)
+        return True
